@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://my-first-app-2byt.onrender.com";
 
 export const createUser = async (user) => {
   const res = await fetch(`${BASE_URL}/users/`, {
@@ -15,13 +15,13 @@ export const createUser = async (user) => {
 };
 
 export const deleteUser = async (id) => {
-    await fetch(`http://127.0.0.1:8000/users/${id}`, {
+    await fetch(`{BASE_URL}/users/${id}`, {
         method: "DELETE",
     });
 };
 
 export const updateUser = async (id, user) => {
-  const res = await fetch(`http://127.0.0.1:8000/users/${id}`, {
+  const res = await fetch(`${BASE_URL}/users/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const getAuthHeaders = () => {
 
 
 export const loginUser = async (data) => {
-  const res = await fetch("http://127.0.0.1:8000/users/login", {
+  const res = await fetch(`${BASE_URL}/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export const getUsers = async () => {
 
 const token = localStorage.getItem("token");
 
-fetch("http://127.0.0.1:8000/users", {
+fetch(`${BASE_URL}/users`, {
   headers: {
     Authorization: `Bearer ${token}`,
   },
