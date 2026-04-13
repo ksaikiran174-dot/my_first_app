@@ -1,0 +1,69 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: #fafafa;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+input:focus {
+  border-color: #007bff; 
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+button {
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  font-size: medium;
+  font-weight: bold;
+  font-family: sans-serif;
+  background-color: white;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease; 
+}
+
+button:hover {
+  background-color: lightblue;
+  color: white;
+  
+}
+
+input:hover {
+    border: 2px solid grey
+}
+
+input::placeholder{
+    color: medium grey ;
+}
+
+.action_btn {
+  background-color: #007bff; /* Primary Blue */
+  color: white;              /* White text for contrast */
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0;
+  transition: background-color 0.3s, transform 0.1s;
+  width: 100%; /* Optional: matches input width */
+}
+
+.action_btn:hover {
+  background-color: #0056b3;
+}
+
+.action_btn:active{
+  transform: scale(0.98);
+}

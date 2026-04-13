@@ -1,0 +1,85 @@
+.users_page{
+    background-image: url("./users_page.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 10vh;
+    
+}
+
+.container_users {
+    box-sizing: border-box;
+    width: 60vw;
+    margin: 0 auto;   /* center horizontally */
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+
+    max-height: 70vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    
+    height: auto;
+}
+
+.usersList {
+    box-sizing: border-box;
+    font-family: Carter One ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+
+    padding: 4px 12px;
+
+    border: 1px solid green;
+    border-radius: 8px;
+
+    color: wheat;
+    font-size: 14px;
+}
+
+.usersList button {
+    padding: 8px 8px;
+}
+
+.buttons{
+    display: flex;
+    gap: 10px;
+}
+
+.title_for_users {
+    color: white;
+    font-family: "Carter One", serif;
+    font-size: 50px;
+    
+    font-weight: bold;
+}
+
+.usersList:hover {
+      background: rgba(0,0,0,0.05);
+  transform: scale(1.01);
+  transition: 0.2s;
+}
+
+.delete_btn {
+    background-color: red;
+    color: white;
+    border: none;
+}
+
+.delete_btn:hover{
+    background:  darkred;
+}
+
+.edit_btn{
+    background-color: blue;
+    color: white;
+    border: none; 
+}
+
+.edit_btn:hover{
+    background: darkblue;
+}

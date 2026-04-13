@@ -1,0 +1,50 @@
+.login_page{
+    min-height: 100vh;
+    width: 100%;
+
+    background-image: url("./login_page.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 7vw 20vh;
+}
+
+.container{
+    
+    margin-left: 5vw;
+    width: 30vw;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Very light white tint */
+    backdrop-filter: blur(10px);          /* Blurs the map behind it */
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+._button{
+    padding: 10px;
+    margin: 35px;
+    background-color: green;
+    color: white;
+}
+
+._input{
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    
+}
+
+._h2 {
+    color: white;
+    font-family: 'Inter', sans-serif ;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+._input::placeholder{
+    font-weight: 500;
+}
