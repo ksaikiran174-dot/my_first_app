@@ -13,9 +13,13 @@ export default function Home({ setIsLoggedIn }) {
 
   useEffect(() => {
   if (location.state) {
-    setEditingUser(location.state);   // 🔥 connect both
+    setEditingUser(location.state);
+
+    // ✅ CLEAR STATE AFTER USING
+    navigate(location.pathname, { replace: true });
   }
-}, [location.state]);
+}, [location.state, navigate, location.pathname]);
+
 
  const loadUsers = useCallback(async () => {
   const data = await getUsers();
