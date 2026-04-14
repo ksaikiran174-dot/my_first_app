@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { getUsers, deleteUser } from "../api/api";
 import UserForm from "../components/UserForm";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate , useLocation } from "react-router-dom";
+
 
 export default function Home({ setIsLoggedIn }) {
   const [users, setUsers] = useState([]);
@@ -17,33 +17,22 @@ export default function Home({ setIsLoggedIn }) {
   }
 }, [location.state]);
 
-  useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
-
-  useEffect(() => {
-  // const token = localStorage.getItem("token");
-
- 
-}, [loadUsers]);
-
   const loadUsers = async () => {
     const data = await getUsers();
     
 
     if (data.detail === "Invalid token") {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/");
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      navigate("/");
   } else {
     setUsers(data);
   }
   };
 
-  const handleDelete = async (id) => {
-    await deleteUser(id);
-    loadUsers();
-  };
+    useEffect(() => {
+      loadUsers();
+  }, []);
 
   const handleLogout = () => {
   localStorage.removeItem("token");
