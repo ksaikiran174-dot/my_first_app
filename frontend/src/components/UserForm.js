@@ -20,6 +20,7 @@ const handleSubmit = async () => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify({ name, email }),
     });
@@ -29,6 +30,7 @@ const handleSubmit = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify({ name, email }),
     });
