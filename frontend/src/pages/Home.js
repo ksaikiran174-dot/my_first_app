@@ -19,13 +19,13 @@ export default function Home({ setIsLoggedIn }) {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [loadUsers]);
 
   useEffect(() => {
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
  
-}, []);
+}, [loadUsers]);
 
   const loadUsers = async () => {
     const data = await getUsers();

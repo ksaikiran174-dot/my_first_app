@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { createUser, updateUser } from "../api/api";
 import "./UserForm.css";
 
 export default function UserForm({ reload, editingUser, setEditingUser, loadUsers }) {
