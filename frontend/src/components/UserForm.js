@@ -16,7 +16,7 @@ export default function UserForm({ reload, editingUser, setEditingUser, loadUser
 const handleSubmit = async () => {
   if (editingUser) {
     // UPDATE
-    await fetch(`${BASE_URL}/${editingUser.id}`, {
+    await fetch(`${BASE_URL}/users/${editingUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
