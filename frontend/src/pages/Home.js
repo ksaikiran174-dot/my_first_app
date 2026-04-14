@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getUsers, deleteUser } from "../api/api";
+import { getUsers} from "../api/api";
 import UserForm from "../components/UserForm";
 import "./Home.css";
 import { useNavigate , useLocation } from "react-router-dom";
 
 
 export default function Home({ setIsLoggedIn }) {
-  const [users, setUsers] = useState([]);
+  const [, setUsers] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const [editingUser, setEditingUser] = useState(null);
@@ -32,7 +32,7 @@ export default function Home({ setIsLoggedIn }) {
 
     useEffect(() => {
       loadUsers();
-  }, []);
+    }, []);
 
   const handleLogout = () => {
   localStorage.removeItem("token");
