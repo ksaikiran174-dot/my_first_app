@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./UserForm.css";
+import { BASE_URL } from "../api/api"
 
 export default function UserForm({ reload, editingUser, setEditingUser, loadUsers }) {
   const [name, setName] = useState("");
@@ -15,7 +16,7 @@ export default function UserForm({ reload, editingUser, setEditingUser, loadUser
 const handleSubmit = async () => {
   if (editingUser) {
     // UPDATE
-    await fetch(`http://127.0.0.1:8000/users/${editingUser.id}`, {
+    await fetch(`${BASE_URL}/${editingUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +25,7 @@ const handleSubmit = async () => {
     });
   } else {
     // CREATE
-    await fetch("http://127.0.0.1:8000/users", {
+    await fetch(`${BASE_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
