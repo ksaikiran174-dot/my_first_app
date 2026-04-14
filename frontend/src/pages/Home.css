@@ -83,3 +83,19 @@
 .existing_users:hover{
   background-color: darkred;
 }
+
+.spinner {
+  margin: 20px auto;
+  border: 4px solid #ccc;
+  border-top: 4px solid #00ff88;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

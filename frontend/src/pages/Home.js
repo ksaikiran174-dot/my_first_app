@@ -10,6 +10,7 @@ export default function Home({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [editingUser, setEditingUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
   if (location.state) {
@@ -22,16 +23,18 @@ export default function Home({ setIsLoggedIn }) {
 
 
  const loadUsers = useCallback(async () => {
+  setLoading(true);
   const data = await getUsers();
 
-  if (data.detail === "Invalid token") {
+  if (data?.detail === "Invalid token") {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     navigate("/");
   } else {
     setUsers(data);
   }
-}, [navigate, setIsLoggedIn]);
+  setLoading(false);  // 🔥 stop loading
+  }, [navigate, setIsLoggedIn]);
 
     useEffect(() => {
       loadUsers();
@@ -56,12 +59,18 @@ export default function Home({ setIsLoggedIn }) {
                 setEditingUser={setEditingUser} />
        <br />< br /><h2 style={{fontFamily: "Lato", fontWeight: "bold"}}>Existing users :</h2>
 
-      <div style={{ marginTop: "20px" }}>
-        
-            <button className="existing_users" onClick={() => navigate("/users")}>
-                Show Existing Users
-            </button>
+    {loading ? (
+        <div className="spinner">Loading...</div>
+        ) : (
+     <div style={{ marginTop: "20px" }}>
+          <button
+      className="existing_users"
+      onClick={() => navigate("/users")}
+          >
+      Show Existing Users
+        </button>
           </div>
+      )}
           </div></div>
         )
         };
