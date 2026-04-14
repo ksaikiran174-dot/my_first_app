@@ -17,8 +17,6 @@ export const createUser = async (user) => {
 export const deleteUser = async (id) => {
     await fetch(`${BASE_URL}/users/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`}
     });
 };
 
