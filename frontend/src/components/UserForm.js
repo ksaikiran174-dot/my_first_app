@@ -14,9 +14,12 @@ export default function UserForm({ reload, editingUser, setEditingUser, loadUser
   }, [editingUser]);
 
 const handleSubmit = async () => {
+  console.log("EDITING USER:", editingUser);
+
   if (editingUser) {
-    // UPDATE
-    await fetch(`${BASE_URL}/users/${editingUser.id}`, {
+    console.log("UPDATING USER...");
+
+    const res = await fetch(`${BASE_URL}/users/${editingUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -24,16 +27,11 @@ const handleSubmit = async () => {
       },
       body: JSON.stringify({ name, email }),
     });
+
+    const data = await res.json();
+    console.log("UPDATE RESPONSE:", data);
   } else {
-    // CREATE
-    await fetch(`${BASE_URL}/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify({ name, email }),
-    });
+    console.log("CREATING USER...");
   }
 
   setName("");
