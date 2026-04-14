@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./UserForm.css";
 import { BASE_URL } from "../api/api"
+import { createUser, updateUser } from "../api/api";
 
 export default function UserForm({ reload, editingUser, setEditingUser, loadUsers }) {
   const [name, setName] = useState("");
@@ -17,36 +18,34 @@ const handleSubmit = async () => {
   console.log("EDITING USER:", editingUser);
 
   if (editingUser) {
-    console.log("UPDATING USER...");
+    try {
+      if (editingUser) {
+        // ✅ UPDATE
+        await updateUser(editingUser.id, { name, email });
+      } else {
+        // ✅ CREATE
+        await createUser({ name, email });
+      }
 
-    await fetch(`${BASE_URL}/users/${editingUser.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify({ name, email }),
-    });
+      // ✅ clear form
+      setName("");
+      setEmail("");
 
-  } else {
-    console.log("CREATING USER...");
+      // ✅ reload users
+      loadUsers();
 
-    await fetch(`${BASE_URL}/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify({ name, email }),
-    });
-  }
+      // ✅ reset editing
+      setEditingUser(null);
+
+    } catch (error) {
+      console.error("ERROR:", error);
+    }
 
   setName("");
   setEmail("");
   loadUsers();
   setEditingUser(null);
 };
-
 
   return (
     <div className="form">
@@ -58,4 +57,4 @@ const handleSubmit = async () => {
     </div>
   );
 }
-
+};

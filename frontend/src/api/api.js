@@ -1,37 +1,4 @@
-
-
-
 const BASE_URL = "https://my-first-app-2byt.onrender.com";
-
-export const createUser = async (user) => {
-  const res = await fetch(`${BASE_URL}/users/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-  return res.json();
-};
-
-export const deleteUser = async (id) => {
-    await fetch(`${BASE_URL}/users/${id}`, {
-        method: "DELETE",
-    });
-};
-
-export const updateUser = async (id, user) => {
-  const res = await fetch(`${BASE_URL}/users/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-
-  return handleResponse(res);
-};
-
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
@@ -42,6 +9,31 @@ const getAuthHeaders = () => {
   };
 };
 
+export const createUser = async (user) => {
+  const res = await fetch(`${BASE_URL}/users`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify(user),
+  });
+  return handleResponse(res);
+};
+
+export const deleteUser = async (id) => {
+  await fetch(`${BASE_URL}/users/${id}`, {
+    method: "DELETE",
+    headers: getAuthHeaders(),
+  });
+};
+
+export const updateUser = async (id, user) => {
+  const res = await fetch(`${BASE_URL}/users/${id}`, {
+    method: "PATCH",
+    headers: getAuthHeaders(),
+    body: JSON.stringify(user),
+  });
+
+  return handleResponse(res);
+};
 
 export const loginUser = async (data) => {
   const res = await fetch(`${BASE_URL}/users/login`, {
@@ -52,9 +44,8 @@ export const loginUser = async (data) => {
     body: JSON.stringify(data),
   });
 
-  return await handleResponse(res);   
+  return handleResponse(res);
 };
-
 
 export const getUsers = async () => {           
   const res = await fetch(`${BASE_URL}/users`, {
@@ -64,19 +55,9 @@ export const getUsers = async () => {
   return handleResponse(res);
 };
 
-const token = localStorage.getItem("token");
-
-fetch(`${BASE_URL}/users`, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
-
-
 const handleResponse = async (res) => {
   const data = await res.json();
 
-  // 🔥 Only logout if token exists
   const token = localStorage.getItem("token");
 
   if (
