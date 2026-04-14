@@ -24,17 +24,22 @@ export default function Home({ setIsLoggedIn }) {
 
  const loadUsers = useCallback(async () => {
   setLoading(true);
-  const data = await getUsers();
 
-  if (data?.detail === "Invalid token") {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/");
-  } else {
-    setUsers(data);
-  }
-  setLoading(false);  // 🔥 stop loading
-  }, [navigate, setIsLoggedIn]);
+  setTimeout(async () => {
+    const data = await getUsers();
+
+    if (data?.detail === "Invalid token") {
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      navigate("/");
+    } else {
+      setUsers(data);
+    }
+
+    setLoading(false);
+  }, 3000); // ⏱️ simulate slow API
+}, [navigate, setIsLoggedIn]);
+
 
     useEffect(() => {
       loadUsers();
