@@ -22,7 +22,7 @@ export const deleteUser = async (id) => {
 
 export const updateUser = async (id, user) => {
   const res = await fetch(`${BASE_URL}/users/${id}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },

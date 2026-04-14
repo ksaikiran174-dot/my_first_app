@@ -74,8 +74,6 @@ export default function Home({ setIsLoggedIn }) {
 
 
 
-
-
 // {users.map((user, index) => (
 //           <div
 //             className="user-row"
