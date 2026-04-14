@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getUsers} from "../api/api";
 import UserForm from "../components/UserForm";
 import "./Home.css";
@@ -17,22 +17,21 @@ export default function Home({ setIsLoggedIn }) {
   }
 }, [location.state]);
 
-  const loadUsers = async () => {
-    const data = await getUsers();
-    
+ const loadUsers = useCallback(async () => {
+  const data = await getUsers();
 
-    if (data.detail === "Invalid token") {
-      localStorage.removeItem("token");
-      setIsLoggedIn(false);
-      navigate("/");
+  if (data.detail === "Invalid token") {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
   } else {
     setUsers(data);
   }
-  };
+}, [navigate, setIsLoggedIn]);
 
     useEffect(() => {
       loadUsers();
-    }, []);
+    }, [loadUsers]);
 
   const handleLogout = () => {
   localStorage.removeItem("token");
