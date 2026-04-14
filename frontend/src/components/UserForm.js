@@ -19,7 +19,7 @@ const handleSubmit = async () => {
   if (editingUser) {
     console.log("UPDATING USER...");
 
-    const res = await fetch(`${BASE_URL}/users/${editingUser.id}`, {
+    await fetch(`${BASE_URL}/users/${editingUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -28,10 +28,17 @@ const handleSubmit = async () => {
       body: JSON.stringify({ name, email }),
     });
 
-    const data = await res.json();
-    console.log("UPDATE RESPONSE:", data);
   } else {
     console.log("CREATING USER...");
+
+    await fetch(`${BASE_URL}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify({ name, email }),
+    });
   }
 
   setName("");
