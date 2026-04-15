@@ -40,7 +40,6 @@ const loadUsers = useCallback(async () => {
       navigate("/");
     } else {
       setUsers(data);
-      setMessage("Users loaded successfully ✅");
     }
 
   } catch (err) {
@@ -54,6 +53,10 @@ const loadUsers = useCallback(async () => {
     useEffect(() => {
       loadUsers();
     }, [loadUsers]);
+
+    useEffect(() => {
+  setMessage("Test success message ✅");
+}, []);
 
 useEffect(() => {
   if (message || error) {
