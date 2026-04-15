@@ -11,7 +11,11 @@ export default function Home({ setIsLoggedIn }) {
   const location = useLocation();
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
+
+  
   useEffect(() => {
   if (location.state) {
     setEditingUser(location.state);
@@ -22,10 +26,12 @@ export default function Home({ setIsLoggedIn }) {
 }, [location.state, navigate, location.pathname]);
 
 
- const loadUsers = useCallback(async () => {
+const loadUsers = useCallback(async () => {
   setLoading(true);
+  setError("");
+  setMessage("");
 
-  setTimeout(async () => {
+  try {
     const data = await getUsers();
 
     if (data?.detail === "Invalid token") {
@@ -36,14 +42,29 @@ export default function Home({ setIsLoggedIn }) {
       setUsers(data);
     }
 
-    setLoading(false);
-  }, 3000); // ⏱️ simulate slow API
+  } catch (err) {
+    setError("Failed to load users ❌");
+  }
+
+  setLoading(false);
 }, [navigate, setIsLoggedIn]);
 
 
     useEffect(() => {
       loadUsers();
     }, [loadUsers]);
+
+useEffect(() => {
+  if (message || error) {
+    const timer = setTimeout(() => {
+      setMessage("");
+      setError("");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }
+}, [message, error]);
+
 
   const handleLogout = () => {
   localStorage.removeItem("token");
@@ -56,13 +77,24 @@ export default function Home({ setIsLoggedIn }) {
     <div className="home_page">
     <div className="_container">
       <h2 className="title">USER PAGE</h2>
+      {message && (
+  <p style={{ color: "green", marginTop: "10px" }}>
+    {message}
+  </p>
+)}
+
+{error && (
+  <p style={{ color: "red", marginTop: "10px" }}>
+    {error}
+  </p>
+)}
 
       <button onClick={handleLogout} className="logout_btn" >Logout</button>
 
       <UserForm loadUsers={loadUsers}
                 editingUser={editingUser}
                 setEditingUser={setEditingUser} />
-       <br />< br /><h2 style={{fontFamily: "Lato", fontWeight: "bold"}}>Existing users :</h2>
+       <br /><br /><h2 style={{fontFamily: "Lato", fontWeight: "bold"}}>Existing users :</h2>
 
     {loading ? (
         <div className="spinner">Loading...</div>
