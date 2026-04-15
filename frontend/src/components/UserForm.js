@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./UserForm.css";
 import { createUser, updateUser } from "../api/api";
 
-export default function UserForm({ editingUser, setEditingUser, loadUsers }) {
+export default function UserForm({ editingUser, setEditingUser, loadUsers, setMessage, setError }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -14,27 +14,29 @@ export default function UserForm({ editingUser, setEditingUser, loadUsers }) {
   }, [editingUser]);
 
   const handleSubmit = async () => {
-    console.log("EDITING USER:", editingUser);
+  console.log("EDITING USER:", editingUser);
 
-    try {
-      if (editingUser) {
-        // ✅ UPDATE
-        await updateUser(editingUser.id, { name, email });
-      } else {
-        // ✅ CREATE
-        await createUser({ name, email });
-      }
-
-      setName("");
-      setEmail("");
-      loadUsers();
-      setEditingUser(null);
-
-    } catch (error) {
-      console.error("ERROR:", error);
+  try {
+    if (editingUser) {
+      await updateUser(editingUser.id, { name, email });
+      setMessage("User updated successfully ✅");
+    } else {
+      await createUser({ name, email });
+      setMessage("User created successfully ✅");
     }
-  };
 
+    setName("");
+    setEmail("");
+    setMessage("");
+    setError("");
+    loadUsers();
+    setEditingUser(null);
+
+  } catch (error) {
+    console.error("ERROR:", error);
+    setError("Something went wrong ❌");
+  }
+};
   return (
     <div className="form">
       <input

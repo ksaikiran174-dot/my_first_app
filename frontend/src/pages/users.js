@@ -5,43 +5,100 @@ import { useNavigate } from "react-router-dom";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
+
+  // ✅ Load users
+  const loadUsers = async () => {
+    setLoading(true);
+    setMessage("");
+    setError("");
+
+    try {
+      const data = await getUsers();
+
+      if (data?.detail) {
+        setError("Session expired, login again ❌");
+        return;
+      }
+
+      setUsers(data);
+    } catch (err) {
+      setError("Failed to load users ❌");
+    }
+
+    setLoading(false);
+  };
 
   useEffect(() => {
     loadUsers();
   }, []);
 
-  const loadUsers = async () => {
-    const data = await getUsers();
-
-    console.log("USERS DATA:", data);
-
-  if (data.detail) {
-    alert("Session expired, login again");
-    return;
-    }
-
-    setUsers(data);
-  };
-
+  // ✅ Delete user
   const handleDelete = async (id) => {
-    await deleteUser(id);
-    loadUsers();
+    setMessage("");
+    setError("");
+
+    try {
+      await deleteUser(id);
+      setMessage("User deleted successfully 🗑️");
+      loadUsers();
+    } catch (error) {
+      setError("Failed to delete user ❌");
+    }
   };
 
-  return (<div className="users_page">
-    <div className="container_users" style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2 className="title_for_users">Users List</h2>
+  // ✅ Auto-hide messages
+  useEffect(() => {
+    if (message || error) {
+      const timer = setTimeout(() => {
+        setMessage("");
+        setError("");
+      }, 3000);
 
-      {users.map((user) => (
-        <div className="usersList" key={user.id} style={{ marginBottom: "10px" }}>
-          {user.name} - {user.email}
-          <div className="buttons">
-          <button className="delete_btn" onClick={() => handleDelete(user.id)}>Delete</button>
-          <button className="edit_btn" onClick={() => navigate("/home", { state: user })}>Edit</button>
-          </div>
-        </div>
-      ))}
-    </div></div>
+      return () => clearTimeout(timer);
+    }
+  }, [message, error]);
+
+  return (
+    <div className="users_page">
+      <div className="container_users" style={{ textAlign: "center", marginTop: "50px" }}>
+        <h2 className="title_for_users">Users List</h2>
+
+        {/* ✅ Messages */}
+        {message && <p style={{ color: "green" }}>{message}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {/* ✅ Loading */}
+        {loading ? (
+          <div className="spinner">Loading...</div>
+        ) : (
+          users.map((user) => (
+            <div className="usersList" key={user.id} style={{ marginBottom: "10px" }}>
+              {user.name} - {user.email}
+
+              <div className="buttons">
+                <button
+                  className="delete_btn"
+                  onClick={() => handleDelete(user.id)}
+                >
+                  Delete
+                </button>
+
+                <button
+                  className="edit_btn"
+                  onClick={() => navigate("/home", { state: user })}
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
   );
 }

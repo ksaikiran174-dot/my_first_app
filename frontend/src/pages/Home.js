@@ -86,7 +86,10 @@ useEffect(() => {
 
       <UserForm loadUsers={loadUsers}
                 editingUser={editingUser}
-                setEditingUser={setEditingUser} />
+                setEditingUser={setEditingUser}
+                setMessage={setMessage}
+                setError={setError}
+                />
        <br /><br /><h2 style={{fontFamily: "Lato", fontWeight: "bold"}}>Existing users :</h2>
 
     {loading ? (
