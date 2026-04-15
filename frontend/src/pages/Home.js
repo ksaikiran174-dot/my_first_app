@@ -78,21 +78,10 @@ useEffect(() => {
 
 
   return (
+
     <div className="home_page">
     <div className="_container">
       <h2 className="title">USER PAGE</h2>
-      {message && (
-  <p style={{ color: "green", marginTop: "10px" }}>
-    {message}
-  </p>
-)}
-
-{error && (
-  <p style={{ color: "red", marginTop: "10px" }}>
-    {error}
-  </p>
-)}
-
       <button onClick={handleLogout} className="logout_btn" >Logout</button>
 
       <UserForm loadUsers={loadUsers}
@@ -115,7 +104,18 @@ useEffect(() => {
           </div></div>
         )
         };
-        
+              {message && (
+  <p style={{ color: "green", marginTop: "10px" }}>
+    {message}
+  </p>
+)}
+
+{error && (
+  <p style={{ color: "red", marginTop: "10px" }}>
+    {error}
+  </p>
+)}
+
 
       
   
