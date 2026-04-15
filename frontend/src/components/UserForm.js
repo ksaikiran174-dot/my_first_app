@@ -27,7 +27,6 @@ export default function UserForm({ editingUser, setEditingUser, loadUsers, setMe
 
     setName("");
     setEmail("");
-    setMessage("");
     setError("");
     loadUsers();
     setEditingUser(null);
