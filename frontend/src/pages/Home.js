@@ -40,6 +40,7 @@ const loadUsers = useCallback(async () => {
       navigate("/");
     } else {
       setUsers(data);
+      setMessage("Users loaded successfully ✅");
     }
 
   } catch (err) {
