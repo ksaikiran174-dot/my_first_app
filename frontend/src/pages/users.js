@@ -14,8 +14,6 @@ export default function Users() {
   // ✅ Load users
   const loadUsers = async () => {
     setLoading(true);
-    setMessage("");
-    setError("");
 
     try {
       const data = await getUsers();
