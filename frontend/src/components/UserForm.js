@@ -19,16 +19,17 @@ export default function UserForm({ editingUser, setEditingUser, loadUsers, setMe
   try {
     if (editingUser) {
       await updateUser(editingUser.id, { name, email });
+      await loadUsers();
       setMessage("User updated successfully ✅");
     } else {
       await createUser({ name, email });
+      await loadUsers();
       setMessage("User created successfully ✅");
     }
 
     setName("");
     setEmail("");
     setError("");
-    loadUsers();
     setEditingUser(null);
 
   } catch (error) {

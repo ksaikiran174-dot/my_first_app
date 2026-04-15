@@ -42,8 +42,8 @@ export default function Users() {
 
     try {
       await deleteUser(id);
+      await loadUsers();
       setMessage("User deleted successfully 🗑️");
-      loadUsers();
     } catch (error) {
       setError("Failed to delete user ❌");
     }
