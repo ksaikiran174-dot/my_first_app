@@ -54,10 +54,6 @@ const loadUsers = useCallback(async () => {
       loadUsers();
     }, [loadUsers]);
 
-    useEffect(() => {
-  setMessage("Test success message ✅");
-}, []);
-
 useEffect(() => {
   if (message || error) {
     const timer = setTimeout(() => {
