@@ -52,6 +52,7 @@ export default function Users() {
   };
 
   const confirmDelete = async () => {
+    console.log("YES CLICKED");
   setShowConfirm(false);
 
   try {
@@ -118,6 +119,7 @@ export default function Users() {
               <button
                 className="delete_btn"
                 onClick={() => {
+                  console.log("Delete clicked");
                   setSelectedUserId(user.id);
                   setShowConfirm(true);
                 }}
