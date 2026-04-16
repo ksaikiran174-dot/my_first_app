@@ -8,6 +8,8 @@ export default function Users() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -49,6 +51,21 @@ export default function Users() {
     }
   };
 
+  const confirmDelete = async () => {
+  setShowConfirm(false);
+
+  try {
+    await deleteUser(selectedUserId);
+    await loadUsers();
+    setMessage("User deleted successfully 🗑️");
+  } catch (error) {
+    setError("Failed to delete user ❌");
+  }
+};
+
+
+
+
   // ✅ Auto-hide messages
   useEffect(() => {
     if (message || error) {
@@ -62,41 +79,62 @@ export default function Users() {
   }, [message, error]);
 
   return (
-    <div className="users_page">
-      <div className="container_users" style={{ textAlign: "center", marginTop: "50px" }}>
-        <h2 className="title_for_users">Users List</h2>
+  <div className="users_page">
+    <div
+      className="container_users"
+      style={{ textAlign: "center", marginTop: "50px" }}
+    >
+      <h2 className="title_for_users">Users List</h2>
 
-        {/* ✅ Messages */}
-        {message && <p style={{ color: "green" }}>{message}</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      {/* ✅ Confirm Modal */}
+      {showConfirm && (
+        <div className="confirm_modal">
+          <div className="modal_content">
+            <p>Are you sure you want to delete this user?</p>
 
-        {/* ✅ Loading */}
-        {loading ? (
-          <div className="spinner">Loading...</div>
-        ) : (
-          users.map((user) => (
-            <div className="usersList" key={user.id} style={{ marginBottom: "10px" }}>
-              {user.name} - {user.email}
+            <button onClick={confirmDelete}>Yes</button>
+            <button onClick={() => setShowConfirm(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
 
-              <div className="buttons">
-                <button
-                  className="delete_btn"
-                  onClick={() => handleDelete(user.id)}
-                >
-                  Delete
-                </button>
+      {/* ✅ Messages */}
+      {message && <p style={{ color: "green" }}>{message}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-                <button
-                  className="edit_btn"
-                  onClick={() => navigate("/home", { state: user })}
-                >
-                  Edit
-                </button>
-              </div>
+      {/* ✅ Loading or Users */}
+      {loading ? (
+        <div className="spinner">Loading...</div>
+      ) : (
+        users.map((user) => (
+          <div
+            className="usersList"
+            key={user.id}
+            style={{ marginBottom: "10px" }}
+          >
+            {user.name} - {user.email}
+
+            <div className="buttons">
+              <button
+                className="delete_btn"
+                onClick={() => {
+                  setSelectedUserId(user.id);
+                  setShowConfirm(true);
+                }}
+              >
+                Delete
+              </button>
+
+              <button
+                className="edit_btn"
+                onClick={() => navigate("/home", { state: user })}
+              >
+                Edit
+              </button>
             </div>
-          ))
-        )}
-      </div>
+          </div>
+        ))
+      )}
     </div>
-  );
-}
+  </div>
+)};
