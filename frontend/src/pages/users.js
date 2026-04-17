@@ -1,21 +1,25 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getUsers, deleteUser } from "../api/api";
 import "./users.css";
 import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
+import Toast from "../components/Toast";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const navigate = useNavigate();
 
+  const showToast = useCallback((message, variant = "info") => {
+    setToast({ message, variant, key: Date.now() });
+  }, []);
+
   // ✅ Load users
-  const loadUsers = async () => {
+  const loadUsers = useCallback(async () => {
     setLoading(true);
 
     try {
@@ -27,15 +31,15 @@ export default function Users() {
 
       setUsers(data);
     } catch (err) {
-      setError("Failed to load users ❌");
+      showToast("Failed to load users ❌", "error");
     }
 
     setLoading(false);
-  };
+  }, [showToast]);
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [loadUsers]);
 
   const openDeleteConfirm = (user) => {
     setSelectedUser(user);
@@ -55,9 +59,9 @@ export default function Users() {
     if (!userId) return;
     await deleteUser(userId);
     await loadUsers();
-    setMessage("User deleted successfully 🗑️");
+    showToast("User deleted successfully 🗑️", "success");
   } catch (error) {
-    setError(error?.message || "Failed to delete user ❌");
+    showToast(error?.message || "Failed to delete user ❌", "error");
   }
 };
 
@@ -75,18 +79,6 @@ export default function Users() {
 
 
 
-  // ✅ Auto-hide messages
-  useEffect(() => {
-    if (message || error) {
-      const timer = setTimeout(() => {
-        setMessage("");
-        setError("");
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [message, error]);
-
   return (
   <div className="users_page">
     <div
@@ -94,10 +86,6 @@ export default function Users() {
       style={{ textAlign: "center", marginTop: "50px" }}
     >
       <h2 className="title_for_users">Users List</h2>
-
-      {/* ✅ Messages */}
-      {message && <p style={{ color: "green" }}>{message}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
 
       {/* ✅ Loading or Users */}
       {loading ? (
@@ -180,5 +168,12 @@ export default function Users() {
         </div>,
         document.body
       )}
+
+    <Toast
+      open={!!toast}
+      message={toast?.message}
+      variant={toast?.variant}
+      onClose={() => setToast(null)}
+    />
   </div>
 )};

@@ -3,6 +3,7 @@ import { getUsers} from "../api/api";
 import UserForm from "../components/UserForm";
 import "./Home.css";
 import { useNavigate , useLocation } from "react-router-dom";
+import Toast from "../components/Toast";
 
 
 export default function Home({ setIsLoggedIn }) {
@@ -11,8 +12,11 @@ export default function Home({ setIsLoggedIn }) {
   const location = useLocation();
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message, variant = "info") => {
+    setToast({ message, variant, key: Date.now() });
+  };
 
 
   
@@ -28,8 +32,6 @@ export default function Home({ setIsLoggedIn }) {
 
 const loadUsers = useCallback(async () => {
   setLoading(true);
-  setError("");
-  setMessage("");
 
   try {
     const data = await getUsers();
@@ -38,27 +40,15 @@ const loadUsers = useCallback(async () => {
     setUsers(data);
 
   } catch (err) {
-    setError("Failed to load users ❌");
+    showToast("Failed to load users ❌", "error");
   }
 
   setLoading(false);
 }, []);
 
-
-    useEffect(() => {
-      loadUsers();
-    }, [loadUsers]);
-
-useEffect(() => {
-  if (message || error) {
-    const timer = setTimeout(() => {
-      setMessage("");
-      setError("");
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }
-}, [message, error]);
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
 
 
   const handleLogout = () => {
@@ -71,44 +61,45 @@ useEffect(() => {
   return (
 
     <div className="home_page">
-    <div className="_container">
-      <h2 className="title">USER PAGE</h2>
-      <button onClick={handleLogout} className="logout_btn" >Logout</button>
-
-      {message && (
-  <p style={{ color: "green", marginTop: "10px" }}>
-    {message}
-  </p>
-)}
-
-{error && (
-  <p style={{ color: "red", marginTop: "10px" }}>
-    {error}
-  </p>
-)}
-
-      <UserForm loadUsers={loadUsers}
-                editingUser={editingUser}
-                setEditingUser={setEditingUser}
-                setMessage={setMessage}
-                setError={setError}
-                />
-       <br /><br /><h2 style={{fontFamily: "Lato", fontWeight: "bold"}}>Existing users :</h2>
-
-    {loading ? (
-        <div className="spinner">Loading...</div>
-        ) : (
-     <div style={{ marginTop: "20px" }}>
-          <button
-      className="existing_users"
-      onClick={() => navigate("/users")}
-          >
-      Show Existing Users
+      <div className="_container">
+        <h2 className="title">USER PAGE</h2>
+        <button onClick={handleLogout} className="logout_btn" >
+          Logout
         </button>
+
+        <UserForm
+          loadUsers={loadUsers}
+          editingUser={editingUser}
+          setEditingUser={setEditingUser}
+          showToast={showToast}
+        />
+
+        <br />
+        <br />
+        <h2 style={{ fontFamily: "Lato", fontWeight: "bold" }}>Existing users :</h2>
+
+        {loading ? (
+          <div className="spinner">Loading...</div>
+        ) : (
+          <div style={{ marginTop: "20px" }}>
+            <button
+              className="existing_users"
+              onClick={() => navigate("/users")}
+            >
+              Show Existing Users
+            </button>
           </div>
-      )}
-          </div></div>
-        )
+        )}
+      </div>
+
+      <Toast
+        open={!!toast}
+        message={toast?.message}
+        variant={toast?.variant}
+        onClose={() => setToast(null)}
+      />
+    </div>
+  );
         };
 
 

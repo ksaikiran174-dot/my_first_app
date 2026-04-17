@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./UserForm.css";
 import { createUser, updateUser } from "../api/api";
 
-export default function UserForm({ editingUser, setEditingUser, loadUsers, setMessage, setError }) {
+export default function UserForm({ editingUser, setEditingUser, loadUsers, showToast }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -14,27 +14,23 @@ export default function UserForm({ editingUser, setEditingUser, loadUsers, setMe
   }, [editingUser]);
 
   const handleSubmit = async () => {
-  console.log("EDITING USER:", editingUser);
-
   try {
     if (editingUser) {
       await updateUser(editingUser.id, { name, email });
       await loadUsers();
-      setMessage("User updated successfully ✅");
+      showToast?.("User updated successfully ✅", "success");
     } else {
       await createUser({ name, email });
       await loadUsers();
-      setMessage("User created successfully ✅");
+      showToast?.("User created successfully ✅", "success");
     }
 
     setName("");
     setEmail("");
-    setError("");
     setEditingUser(null);
 
   } catch (error) {
-    console.error("ERROR:", error);
-    setError("Something went wrong ❌");
+    showToast?.(error?.message || "Something went wrong ❌", "error");
   }
 };
   return (
