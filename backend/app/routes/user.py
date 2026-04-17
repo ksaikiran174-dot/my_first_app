@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.models.user import User
@@ -70,6 +71,10 @@ def update_user(
 
 @router.post("/signup")
 def signup(user: userCreate, db: Session = Depends(get_db)):
+    expected_code = os.getenv("ADMIN_COMPANY_CODE", "saikiran*174")
+    if user.company_code != expected_code:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid company code")
+
     existing = db.query(User).filter(User.email == user.email).first()
     if existing:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already exists")

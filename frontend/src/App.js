@@ -3,6 +3,7 @@ import { useState } from "react";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Users from "./pages/users";
+import Signup from "./pages/Signup";
 
 function App() {
       const [isLoggedIn, setIsLoggedIn] = useState(
@@ -17,6 +18,12 @@ function App() {
         <Route
           path="/"
           element={!isLoggedIn ? <Login setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/home" />}
+        />
+
+        {/* SIGNUP */}
+        <Route
+          path="/signup"
+          element={!isLoggedIn ? <Signup /> : <Navigate to="/home" />}
         />
 
         {/* HOME (PROTECTED) */}
