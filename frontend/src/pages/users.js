@@ -20,8 +20,7 @@ export default function Users() {
     try {
       const data = await getUsers();
 
-      if (data?.detail) {
-        setError("Session expired, login again ❌");
+      if (!data) {
         return;
       }
 
@@ -47,7 +46,7 @@ export default function Users() {
       await loadUsers();
       setMessage("User deleted successfully 🗑️");
     } catch (error) {
-      setError("Failed to delete user ❌");
+      setError(error?.message || "Failed to delete user ❌");
     }
   };
 
@@ -60,7 +59,7 @@ export default function Users() {
     await loadUsers();
     setMessage("User deleted successfully 🗑️");
   } catch (error) {
-    setError("Failed to delete user ❌");
+    setError(error?.message || "Failed to delete user ❌");
   }
 };
 

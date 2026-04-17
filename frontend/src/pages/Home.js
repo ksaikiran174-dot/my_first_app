@@ -34,13 +34,8 @@ const loadUsers = useCallback(async () => {
   try {
     const data = await getUsers();
 
-    if (data?.detail === "Invalid token") {
-      localStorage.removeItem("token");
-      setIsLoggedIn(false);
-      navigate("/");
-    } else {
-      setUsers(data);
-    }
+    if (!data) return;
+    setUsers(data);
 
   } catch (err) {
     setError("Failed to load users ❌");

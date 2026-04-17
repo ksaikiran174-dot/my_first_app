@@ -19,10 +19,11 @@ export const createUser = async (user) => {
 };
 
 export const deleteUser = async (id) => {
-  await fetch(`${BASE_URL}/users/${id}`, {
+  const res = await fetch(`${BASE_URL}/users/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
+  return handleResponse(res);
 };
 
 export const updateUser = async (id, user) => {
@@ -56,7 +57,10 @@ export const getUsers = async () => {
 };
 
 const handleResponse = async (res) => {
-  const data = await res.json();
+  const contentType = res.headers.get("content-type") || "";
+  const data = contentType.includes("application/json")
+    ? await res.json()
+    : { detail: await res.text() };
 
   const token = localStorage.getItem("token");
 
@@ -67,6 +71,14 @@ const handleResponse = async (res) => {
     localStorage.removeItem("token");
     window.location.href = "/";
     return null;
+  }
+
+  if (!res.ok) {
+    const message =
+      data?.detail ||
+      data?.error ||
+      `Request failed (${res.status})`;
+    throw new Error(message);
   }
 
   return data;
