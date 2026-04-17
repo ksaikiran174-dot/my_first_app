@@ -93,7 +93,7 @@ const loadUsers = useCallback(async () => {
             >
               {navigatingUsers ? (
                 <span className="btn_spinner_wrap">
-                  <span className="btn_spinner" aria-hidden="true" />
+                  <span className="btn_spinner_nav" aria-hidden="true" />
                   Loading users...
                 </span>
               ) : (

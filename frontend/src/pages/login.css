@@ -61,7 +61,8 @@
 
 .login_card{
     text-align: left;
-    margin-left: clamp(24px, 12vw, 220px);
+    /* Sit just to the right of the lock’s outer ring in login_page.jpg */
+    margin-left: clamp(140px, 28vw, 460px);
 }
 
 .login_card ._input + ._input{

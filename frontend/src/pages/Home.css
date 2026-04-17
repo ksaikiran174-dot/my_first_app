@@ -95,47 +95,20 @@
   gap: 10px;
 }
 
-.btn_spinner {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 0 0 rgba(255, 255, 255, 0.0);
-  animation: dotPulse 900ms ease-in-out infinite;
-  position: relative;
+/* Navigating to users list: compact rotating arc */
+.btn_spinner_nav {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: btnNavSpin 650ms linear infinite;
 }
 
-.btn_spinner::before,
-.btn_spinner::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.btn_spinner::before {
-  left: -10px;
-  animation: dotPulse 900ms ease-in-out infinite;
-  animation-delay: -180ms;
-}
-
-.btn_spinner::after {
-  left: 10px;
-  animation: dotPulse 900ms ease-in-out infinite;
-  animation-delay: 180ms;
-}
-
-@keyframes dotPulse {
-  0%, 100% {
-    transform: translateY(0);
-    opacity: 0.55;
-  }
-  50% {
-    transform: translateY(-4px);
-    opacity: 1;
+@keyframes btnNavSpin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
