@@ -85,7 +85,7 @@
 }
 
 .existing_users:disabled {
-  opacity: 0.8;
+  opacity: 0.85;
   cursor: not-allowed;
 }
 
@@ -96,12 +96,14 @@
 }
 
 .btn_spinner {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: #ffffff;
-  animation: btnSpin 0.7s linear infinite;
+  border-right-color: rgba(255, 255, 255, 0.9);
+  animation: btnSpin 0.75s linear infinite;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.08) inset;
 }
 
 @keyframes btnSpin {

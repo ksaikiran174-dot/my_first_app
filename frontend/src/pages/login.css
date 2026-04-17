@@ -9,7 +9,7 @@
     background-attachment: fixed;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 24px;
 }
 
@@ -61,6 +61,7 @@
 
 .login_card{
     text-align: left;
+    margin-left: clamp(16px, 7vw, 110px);
 }
 
 .login_card ._input + ._input{
