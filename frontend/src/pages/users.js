@@ -108,44 +108,6 @@ export default function Users() {
     >
       <h2 className="title_for_users">Users List</h2>
 
-      {/* ✅ Confirm Modal */}
-      {showConfirm && (
-        <div
-          className="confirm_modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="delete-title"
-          aria-describedby="delete-desc"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) closeDeleteConfirm();
-          }}
-        >
-          <div className="modal_content" onMouseDown={(e) => e.stopPropagation()}>
-            <div className="modal_header">
-              <h3 id="delete-title">Delete user?</h3>
-            </div>
-
-            <p id="delete-desc" className="modal_desc">
-              This will permanently delete{" "}
-              <span className="modal_user">
-                {selectedUser?.name}
-                {selectedUser?.email ? ` (${selectedUser.email})` : ""}
-              </span>
-              .
-            </p>
-
-            <div className="modal_actions">
-              <button className="modal_btn modal_btn--ghost" onClick={closeDeleteConfirm}>
-                Cancel
-              </button>
-              <button className="modal_btn modal_btn--danger" onClick={confirmDelete}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* ✅ Messages */}
       {message && <p style={{ color: "green" }}>{message}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -165,6 +127,7 @@ export default function Users() {
             <div className="buttons">
               <button
                 className="delete_btn"
+                type="button"
                 onClick={() => openDeleteConfirm(user)}
               >
                 Delete
@@ -172,6 +135,7 @@ export default function Users() {
 
               <button
                 className="edit_btn"
+                type="button"
                 onClick={() => navigate("/home", { state: user })}
               >
                 Edit
@@ -181,5 +145,43 @@ export default function Users() {
         ))
       )}
     </div>
+
+    {/* ✅ Confirm Modal (kept outside container to avoid clipping/stacking issues) */}
+    {showConfirm && (
+      <div
+        className="confirm_modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-title"
+        aria-describedby="delete-desc"
+        onMouseDown={(e) => {
+          if (e.target === e.currentTarget) closeDeleteConfirm();
+        }}
+      >
+        <div className="modal_content" onMouseDown={(e) => e.stopPropagation()}>
+          <div className="modal_header">
+            <h3 id="delete-title">Delete user?</h3>
+          </div>
+
+          <p id="delete-desc" className="modal_desc">
+            This will permanently delete{" "}
+            <span className="modal_user">
+              {selectedUser?.name}
+              {selectedUser?.email ? ` (${selectedUser.email})` : ""}
+            </span>
+            .
+          </p>
+
+          <div className="modal_actions">
+            <button className="modal_btn modal_btn--ghost" type="button" onClick={closeDeleteConfirm}>
+              Cancel
+            </button>
+            <button className="modal_btn modal_btn--danger" type="button" onClick={confirmDelete}>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
 )};
