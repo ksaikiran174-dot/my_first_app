@@ -13,6 +13,7 @@ export default function Home({ setIsLoggedIn }) {
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
+  const [navigatingUsers, setNavigatingUsers] = useState(false);
 
   const showToast = (message, variant = "info") => {
     setToast({ message, variant, key: Date.now() });
@@ -84,9 +85,20 @@ const loadUsers = useCallback(async () => {
           <div style={{ marginTop: "20px" }}>
             <button
               className="existing_users"
-              onClick={() => navigate("/users")}
+              disabled={navigatingUsers}
+              onClick={() => {
+                setNavigatingUsers(true);
+                navigate("/users");
+              }}
             >
-              Show Existing Users
+              {navigatingUsers ? (
+                <span className="btn_spinner_wrap">
+                  <span className="btn_spinner" aria-hidden="true" />
+                  Loading users...
+                </span>
+              ) : (
+                "Show Existing Users"
+              )}
             </button>
           </div>
         )}

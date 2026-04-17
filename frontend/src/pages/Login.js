@@ -29,18 +29,14 @@ const handleLogin = async () => {
 
   return (
     <div className="login_page">
-      <div className="container" style={{ textAlign: "center", marginTop: "100px" }}>
+      <div className="container login_card">
         <h2 className="_h2">Login</h2>
-        <br />
-        <br />
 
         <input
           className="_input"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <br />
-        <br />
 
         <input
           className="_input"
@@ -48,15 +44,13 @@ const handleLogin = async () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <br />
-        <br />
 
-        <button className="_button" onClick={handleLogin}>
+        <button className="_button _button--primary" onClick={handleLogin}>
           Login
         </button>
 
-        <div style={{ marginTop: "16px" }}>
-          <button className="_button" onClick={() => navigate("/signup")}>
+        <div className="login_secondary">
+          <button className="_button _button--link" onClick={() => navigate("/signup")}>
             Create new admin
           </button>
         </div>

@@ -7,34 +7,42 @@
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-    padding: 7vw 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
 }
 
 .container{
-    
-    margin-left: 5vw;
-    width: 30vw;
-    padding: 20px;
+    width: min(420px, 100%);
     background: rgba(255, 255, 255, 0.1); /* Very light white tint */
     backdrop-filter: blur(10px);          /* Blurs the map behind it */
-    padding: 40px;
+    padding: 28px;
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 ._button{
-    padding: 10px;
-    margin: 35px;
-    background-color: green;
-    color: white;
+    width: 100%;
+    padding: 12px 14px;
+    margin: 12px 0 0;
+    border-radius: 12px;
+    border: none;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    cursor: pointer;
 }
 
 ._input{
     margin: 0;
     width: 100%;
     box-sizing: border-box;
-    
+    padding: 12px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(0,0,0,0.28);
+    color: white;
 }
 
 ._h2 {
@@ -43,8 +51,50 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 700;
+    margin: 0 0 16px;
 }
 
 ._input::placeholder{
     font-weight: 500;
+    color: rgba(255,255,255,0.7);
+}
+
+.login_card{
+    text-align: left;
+}
+
+.login_card ._input + ._input{
+    margin-top: 12px;
+}
+
+._button--primary{
+    margin-top: 16px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    box-shadow: 0 10px 26px rgba(34, 197, 94, 0.25);
+}
+
+._button--primary:hover{
+    filter: brightness(0.95);
+}
+
+.login_secondary{
+    margin-top: 10px;
+    text-align: center;
+}
+
+._button--link{
+    width: auto;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: rgba(255,255,255,0.9);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 700;
+}
+
+._button--link:hover{
+    color: #ffffff;
 }
