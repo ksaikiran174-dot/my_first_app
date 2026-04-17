@@ -61,7 +61,7 @@
 
 /* Sit just left of the lock’s outer ring (tune vw if your asset differs) */
 .login_card{
-    text-align: middle;
+    text-align: center;
     margin-left: clamp(52px, 26vw, 260px);
 }
 
