@@ -96,34 +96,117 @@
 }
 
 .btn_spinner {
-  width: 18px;
-  height: 18px;
+  width: 6px;
+  height: 6px;
   border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  border-top-color: #ffffff;
-  border-right-color: rgba(255, 255, 255, 0.9);
-  animation: btnSpin 0.75s linear infinite;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.08) inset;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0.0);
+  animation: dotPulse 900ms ease-in-out infinite;
+  position: relative;
 }
 
-@keyframes btnSpin {
-  to {
-    transform: rotate(360deg);
+.btn_spinner::before,
+.btn_spinner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.btn_spinner::before {
+  left: -10px;
+  animation: dotPulse 900ms ease-in-out infinite;
+  animation-delay: -180ms;
+}
+
+.btn_spinner::after {
+  left: 10px;
+  animation: dotPulse 900ms ease-in-out infinite;
+  animation-delay: 180ms;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
   }
 }
 
 .spinner {
-  margin: 20px auto;
-  border: 4px solid #ccc;
-  border-top: 4px solid #00ff88;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
+  margin: 18px auto;
+  width: 56px;
+  height: 14px;
+  position: relative;
 }
 
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
+.spinner::before,
+.spinner::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-50%);
+  animation: dots 850ms ease-in-out infinite;
+}
+
+.spinner::before {
+  left: 18px;
+  opacity: 0.75;
+  animation-delay: -140ms;
+}
+
+.spinner::after {
+  left: 36px;
+  opacity: 0.6;
+  animation-delay: 140ms;
+}
+
+.spinner {
+  --dot: rgba(255, 255, 255, 0.95);
+}
+
+.spinner span {
+  display: none;
+}
+
+.spinner::marker {
+  display: none;
+}
+
+.spinner {
+  background: transparent;
+}
+
+.spinner::selection {
+  background: transparent;
+}
+
+.spinner::before,
+.spinner::after {
+  background: var(--dot);
+}
+
+.spinner::after {
+  box-shadow: -18px 0 0 var(--dot), -36px 0 0 rgba(255, 255, 255, 0.55);
+}
+
+@keyframes dots {
+  0%, 100% {
+    transform: translateY(-50%) translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-50%) translateY(-6px);
+    opacity: 1;
   }
 }
