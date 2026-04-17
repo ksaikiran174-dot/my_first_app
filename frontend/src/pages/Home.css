@@ -89,97 +89,90 @@
   cursor: not-allowed;
 }
 
-.btn_spinner_wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+/* Home: list fetch — staggered bars (distinct from Users page) */
+.home_page_loader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  margin: 22px auto;
+  min-height: 36px;
 }
 
-/* Navigating to users list: compact rotating arc */
-.btn_spinner_nav {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-top-color: rgba(255, 255, 255, 0.95);
-  border-radius: 50%;
-  flex-shrink: 0;
-  animation: btnNavSpin 650ms linear infinite;
-}
-
-@keyframes btnNavSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spinner {
-  margin: 18px auto;
-  width: 56px;
-  height: 14px;
-  position: relative;
-}
-
-.spinner::before,
-.spinner::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 10px;
+.home_page_loader__bar {
+  width: 6px;
   height: 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  transform: translateY(-50%);
-  animation: dots 850ms ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.85);
+  animation: homeBarWave 700ms ease-in-out infinite;
 }
 
-.spinner::before {
-  left: 18px;
-  opacity: 0.75;
-  animation-delay: -140ms;
+.home_page_loader__bar:nth-child(2) {
+  animation-delay: 100ms;
+}
+.home_page_loader__bar:nth-child(3) {
+  animation-delay: 200ms;
+}
+.home_page_loader__bar:nth-child(4) {
+  animation-delay: 300ms;
 }
 
-.spinner::after {
-  left: 36px;
-  opacity: 0.6;
-  animation-delay: 140ms;
-}
-
-.spinner {
-  --dot: rgba(255, 255, 255, 0.95);
-}
-
-.spinner span {
-  display: none;
-}
-
-.spinner::marker {
-  display: none;
-}
-
-.spinner {
-  background: transparent;
-}
-
-.spinner::selection {
-  background: transparent;
-}
-
-.spinner::before,
-.spinner::after {
-  background: var(--dot);
-}
-
-.spinner::after {
-  box-shadow: -18px 0 0 var(--dot), -36px 0 0 rgba(255, 255, 255, 0.55);
-}
-
-@keyframes dots {
+@keyframes homeBarWave {
   0%, 100% {
-    transform: translateY(-50%) translateY(0);
-    opacity: 0.55;
+    height: 10px;
+    opacity: 0.45;
   }
   50% {
-    transform: translateY(-50%) translateY(-6px);
+    height: 28px;
     opacity: 1;
+  }
+}
+
+/* Home: “Show Existing Users” button — shimmer track + label */
+.home_btn_loader {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.home_btn_loader__track {
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.home_btn_loader__shimmer {
+  display: block;
+  height: 100%;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.95),
+    transparent
+  );
+  animation: homeShimmer 1s ease-in-out infinite;
+}
+
+.home_btn_loader__label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+@keyframes homeShimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
   }
 }

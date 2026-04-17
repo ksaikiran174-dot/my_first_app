@@ -80,7 +80,12 @@ const loadUsers = useCallback(async () => {
         <h2 style={{ fontFamily: "Lato", fontWeight: "bold" }}>Existing users :</h2>
 
         {loading ? (
-          <div className="spinner">Loading...</div>
+          <div className="home_page_loader" role="status" aria-label="Loading">
+            <span className="home_page_loader__bar" />
+            <span className="home_page_loader__bar" />
+            <span className="home_page_loader__bar" />
+            <span className="home_page_loader__bar" />
+          </div>
         ) : (
           <div style={{ marginTop: "20px" }}>
             <button
@@ -92,9 +97,11 @@ const loadUsers = useCallback(async () => {
               }}
             >
               {navigatingUsers ? (
-                <span className="btn_spinner_wrap">
-                  <span className="btn_spinner_nav" aria-hidden="true" />
-                  Loading users...
+                <span className="home_btn_loader" aria-hidden="true">
+                  <span className="home_btn_loader__track">
+                    <span className="home_btn_loader__shimmer" />
+                  </span>
+                  <span className="home_btn_loader__label">Opening…</span>
                 </span>
               ) : (
                 "Show Existing Users"

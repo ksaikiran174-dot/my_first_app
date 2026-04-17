@@ -89,8 +89,8 @@ export default function Users() {
 
       {/* ✅ Loading or Users */}
       {loading ? (
-        <div className="users_spinner" role="status" aria-label="Loading users">
-          <span className="users_spinner_ring" aria-hidden="true" />
+        <div className="users_page_loader" role="status" aria-label="Loading users">
+          <span className="users_page_loader__arc" />
         </div>
       ) : (
         users.map((user) => (

@@ -59,10 +59,10 @@
     color: rgba(255,255,255,0.7);
 }
 
+/* Sit just left of the lock’s outer ring (tune vw if your asset differs) */
 .login_card{
     text-align: left;
-    /* Sit just to the right of the lock’s outer ring in login_page.jpg */
-    margin-left: clamp(140px, 28vw, 460px);
+    margin-left: clamp(72px, 26vw, 480px);
 }
 
 .login_card ._input + ._input{
