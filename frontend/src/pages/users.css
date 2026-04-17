@@ -65,13 +65,13 @@
 }
 
 .delete_btn {
-    background-color: red;
+    background-color: #facc15; /* loud yellow for deployment test */
     color: white;
     border: none;
 }
 
 .delete_btn:hover{
-    background:  darkred;
+    background:  #eab308;
 }
 
 .edit_btn{
