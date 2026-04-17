@@ -9,7 +9,7 @@ export default function Users() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -50,12 +50,23 @@ export default function Users() {
     }
   };
 
+  const openDeleteConfirm = (user) => {
+    setSelectedUser(user);
+    setShowConfirm(true);
+  };
+
+  const closeDeleteConfirm = () => {
+    setShowConfirm(false);
+    setSelectedUser(null);
+  };
+
   const confirmDelete = async () => {
-    console.log("YES CLICKED");
-  setShowConfirm(false);
+  const userId = selectedUser?.id;
+  closeDeleteConfirm();
 
   try {
-    await deleteUser(selectedUserId);
+    if (!userId) return;
+    await deleteUser(userId);
     await loadUsers();
     setMessage("User deleted successfully 🗑️");
   } catch (error) {
@@ -63,6 +74,17 @@ export default function Users() {
   }
 };
 
+  // ✅ Close modal on ESC
+  useEffect(() => {
+    if (!showConfirm) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") closeDeleteConfirm();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [showConfirm]);
 
 
 
@@ -88,12 +110,38 @@ export default function Users() {
 
       {/* ✅ Confirm Modal */}
       {showConfirm && (
-        <div className="confirm_modal">
-          <div className="modal_content">
-            <p>Are you sure you want to delete this user?</p>
+        <div
+          className="confirm_modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-title"
+          aria-describedby="delete-desc"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) closeDeleteConfirm();
+          }}
+        >
+          <div className="modal_content" onMouseDown={(e) => e.stopPropagation()}>
+            <div className="modal_header">
+              <h3 id="delete-title">Delete user?</h3>
+            </div>
 
-            <button onClick={confirmDelete}>Yes</button>
-            <button onClick={() => setShowConfirm(false)}>Cancel</button>
+            <p id="delete-desc" className="modal_desc">
+              This will permanently delete{" "}
+              <span className="modal_user">
+                {selectedUser?.name}
+                {selectedUser?.email ? ` (${selectedUser.email})` : ""}
+              </span>
+              .
+            </p>
+
+            <div className="modal_actions">
+              <button className="modal_btn modal_btn--ghost" onClick={closeDeleteConfirm}>
+                Cancel
+              </button>
+              <button className="modal_btn modal_btn--danger" onClick={confirmDelete}>
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -117,11 +165,7 @@ export default function Users() {
             <div className="buttons">
               <button
                 className="delete_btn"
-                onClick={() => {
-                  console.log("Delete clicked");
-                  setSelectedUserId(user.id);
-                  setShowConfirm(true);
-                }}
+                onClick={() => openDeleteConfirm(user)}
               >
                 Delete
               </button>
