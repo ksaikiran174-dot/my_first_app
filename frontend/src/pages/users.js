@@ -115,7 +115,6 @@ export default function Users() {
               <button
                 className="delete_btn"
                 type="button"
-                style={{ backgroundColor: "#7c3aed" }}
                 onClick={() => openDeleteConfirm(user)}
               >
                 Delete
