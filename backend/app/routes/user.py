@@ -1,4 +1,5 @@
 import os
+from sqlalchemy import or_
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.models.user import User
@@ -27,7 +28,12 @@ async def create_user(
 
 @router.get("/", response_model= list[userResponse])
 async def get_users(db: Session = Depends(get_db), user=Depends(get_current_user)):
-    return db.query(User).all()
+    # Only return non-admin users (admins have a password set from /signup)
+    return (
+        db.query(User)
+        .filter(or_(User.password.is_(None), User.password == ""))
+        .all()
+    )
 
 @router.delete("/{user_id}")
 def delete_user(
