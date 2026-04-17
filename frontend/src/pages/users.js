@@ -37,20 +37,6 @@ export default function Users() {
     loadUsers();
   }, []);
 
-  // ✅ Delete user
-  const handleDelete = async (id) => {
-    setMessage("");
-    setError("");
-
-    try {
-      await deleteUser(id);
-      await loadUsers();
-      setMessage("User deleted successfully 🗑️");
-    } catch (error) {
-      setError(error?.message || "Failed to delete user ❌");
-    }
-  };
-
   const openDeleteConfirm = (user) => {
     setSelectedUser(user);
     setShowConfirm(true);

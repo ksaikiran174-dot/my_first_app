@@ -42,7 +42,7 @@ const loadUsers = useCallback(async () => {
   }
 
   setLoading(false);
-}, [navigate, setIsLoggedIn]);
+}, []);
 
 
     useEffect(() => {
