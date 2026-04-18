@@ -62,11 +62,12 @@ const loadUsers = useCallback(async () => {
   return (
 
     <div className="home_page">
+      <button onClick={handleLogout} className="logout_btn" >
+        Logout
+      </button>
+
       <div className="_container">
         <h2 className="title">USER PAGE</h2>
-        <button onClick={handleLogout} className="logout_btn" >
-          Logout
-        </button>
 
         <UserForm
           loadUsers={loadUsers}
