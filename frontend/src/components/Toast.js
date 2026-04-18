@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./Toast.css";
 
-export default function Toast({ open, message, variant = "info", durationMs = 3000, onClose }) {
+export default function Toast({ open, message, variant = "info", durationMs = 4000, onClose }) {
   useEffect(() => {
     if (!open) return;
     const t = setTimeout(() => onClose?.(), durationMs);
