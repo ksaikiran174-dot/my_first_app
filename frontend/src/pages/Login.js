@@ -35,6 +35,8 @@ const handleLogin = async () => {
         <input
           className="_input"
           placeholder="Email"
+          type="email"
+          autoComplete="email"
           onChange={(e) => setEmail(e.target.value)}
         />
 
@@ -42,6 +44,7 @@ const handleLogin = async () => {
           className="_input"
           placeholder="Password"
           type="password"
+          autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
         />
 

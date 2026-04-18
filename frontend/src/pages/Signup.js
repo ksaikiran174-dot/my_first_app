@@ -53,14 +53,18 @@ export default function Signup() {
         <input
           className="signup_input"
           placeholder="Email"
+          type="email"
+          autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           className="signup_input"
-          placeholder="Password"
+          placeholder="Password (min 8 characters)"
           type="password"
+          autoComplete="new-password"
+          minLength={8}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

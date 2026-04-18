@@ -1,4 +1,7 @@
-const BASE_URL = "https://my-first-app-2byt.onrender.com";
+const BASE_URL = (process.env.REACT_APP_API_URL || "http://127.0.0.1:8000").replace(
+  /\/$/,
+  ""
+);
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
@@ -8,6 +11,22 @@ const getAuthHeaders = () => {
     Authorization: `Bearer ${token}`,
   };
 };
+
+function formatErrorDetail(detail) {
+  if (detail == null) return null;
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail)) {
+    return detail
+      .map((item) =>
+        typeof item === "string"
+          ? item
+          : item?.msg || JSON.stringify(item)
+      )
+      .join("; ");
+  }
+  if (typeof detail === "object" && detail.msg) return detail.msg;
+  return JSON.stringify(detail);
+}
 
 export const createUser = async (user) => {
   const res = await fetch(`${BASE_URL}/users`, {
@@ -60,7 +79,7 @@ export const signupAdmin = async (data) => {
   return handleResponse(res);
 };
 
-export const getUsers = async () => {           
+export const getUsers = async () => {
   const res = await fetch(`${BASE_URL}/users`, {
     headers: getAuthHeaders(),
   });
@@ -87,7 +106,7 @@ const handleResponse = async (res) => {
 
   if (!res.ok) {
     const message =
-      data?.detail ||
+      formatErrorDetail(data?.detail) ||
       data?.error ||
       `Request failed (${res.status})`;
     throw new Error(message);
@@ -95,4 +114,3 @@ const handleResponse = async (res) => {
 
   return data;
 };
-

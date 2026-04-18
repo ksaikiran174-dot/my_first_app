@@ -1,5 +1,15 @@
 # Getting Started with Create React App
 
+## API base URL
+
+Create `frontend/.env.development.local` (see `.env.example`) with:
+
+`REACT_APP_API_URL=http://127.0.0.1:8000`
+
+For production, set `REACT_APP_API_URL` in your host’s build environment before `npm run build` (Create React App inlines this at build time).
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

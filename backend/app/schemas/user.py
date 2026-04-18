@@ -1,21 +1,24 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
 
 class userCreate(BaseModel):
-    name: str
-    email: str
-    password: str
-    company_code: str
+    name: str = Field(..., min_length=1, max_length=120)
+    email: EmailStr
+    password: str = Field(..., min_length=8, max_length=128)
+    company_code: str = Field(..., min_length=1, max_length=200)
+
 
 class userLogin(BaseModel):
-    email: str
-    password: str
+    email: EmailStr
+    password: str = Field(..., min_length=1, max_length=128)
+
 
 class userSimple(BaseModel):
-    name: str
-    email: str
+    name: str = Field(..., min_length=1, max_length=120)
+    email: EmailStr
+
 
 class userResponse(userSimple):
     id: int
 
-    class Config:
-        orm_mode= True
+    model_config = ConfigDict(from_attributes=True)
