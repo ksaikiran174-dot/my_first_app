@@ -42,6 +42,7 @@ export default function Signup() {
     <div className="signup_page">
       <div className="signup_container">
         <h2 className="signup_title">Create Admin</h2>
+        <p className="signup_subtitle">Set up your secure administrator account</p>
 
         <input
           className="signup_input"
