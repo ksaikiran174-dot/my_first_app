@@ -108,6 +108,14 @@
     outline-offset: 2px;
 }
 
+._button--primary:disabled{
+    opacity: 0.72;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+    box-shadow: none;
+}
+
 .login_secondary{
     margin-top: 10px;
     text-align: center;
@@ -127,4 +135,10 @@
 
 ._button--link:hover{
     color: #ffffff;
+}
+
+._button--link:disabled{
+    opacity: 0.65;
+    cursor: not-allowed;
+    text-decoration: none;
 }

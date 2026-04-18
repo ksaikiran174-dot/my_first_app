@@ -113,3 +113,13 @@
   border-color: rgba(148, 163, 184, 0.4);
 }
 
+.signup_link:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.signup_link:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+  transform: none;
+}
+

@@ -48,22 +48,34 @@ input::placeholder{
 }
 
 .action_btn {
-  background-color: #007bff; /* Primary Blue */
-  color: white;              /* White text for contrast */
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
   padding: 12px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   margin: 0;
-  transition: background-color 0.3s, transform 0.1s;
-  width: 100%; /* Optional: matches input width */
+  transition: transform 130ms ease, filter 130ms ease, box-shadow 130ms ease;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.34);
+  width: 100%;
 }
 
 .action_btn:hover {
-  background-color: #0056b3;
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.42);
 }
 
 .action_btn:active{
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+}
+
+.action_btn:disabled{
+  opacity: 0.72;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+  box-shadow: none;
 }

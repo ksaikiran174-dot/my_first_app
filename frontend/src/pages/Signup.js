@@ -19,14 +19,24 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+    const trimmedCompanyCode = companyCode.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedCompanyCode) {
+      showToast("All fields are required", "error");
+      return;
+    }
+
     setLoading(true);
 
     try {
       await signupAdmin({
-        name,
-        email,
-        password,
-        company_code: companyCode,
+        name: trimmedName,
+        email: trimmedEmail,
+        password: trimmedPassword,
+        company_code: trimmedCompanyCode,
       });
 
       showToast("Admin created. Please login ✅", "success");
@@ -82,7 +92,7 @@ export default function Signup() {
           {loading ? "Creating..." : "Create Admin"}
         </button>
 
-        <button className="signup_link" onClick={() => navigate("/")}>
+        <button className="signup_link" onClick={() => navigate("/")} disabled={loading}>
           Back to login
         </button>
       </div>
