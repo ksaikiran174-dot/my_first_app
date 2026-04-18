@@ -1,3 +1,5 @@
+// Production: set REACT_APP_API_URL when you run `npm run build` (hosting dashboard / CI).
+// If unset, Create React App falls back to local dev only — deployed sites will break.
 const BASE_URL = (process.env.REACT_APP_API_URL || "http://127.0.0.1:8000").replace(
   /\/$/,
   ""
@@ -28,8 +30,25 @@ function formatErrorDetail(detail) {
   return JSON.stringify(detail);
 }
 
+/** Wraps fetch so "Failed to fetch" gets a short, actionable hint for prod misconfig. */
+async function safeFetch(url, options) {
+  try {
+    return await fetch(url, options);
+  } catch (e) {
+    const msg = typeof e?.message === "string" ? e.message : "";
+    const isNetwork =
+      e instanceof TypeError || /network|fetch|load failed/i.test(msg);
+    if (isNetwork) {
+      throw new Error(
+        `Cannot reach the API (${BASE_URL}). If this is a live site: set REACT_APP_API_URL to your API base URL when building the frontend; use HTTPS if your site is HTTPS; and add this site's exact origin to CORS_ORIGINS on the server.`
+      );
+    }
+    throw e;
+  }
+}
+
 export const createUser = async (user) => {
-  const res = await fetch(`${BASE_URL}/users`, {
+  const res = await safeFetch(`${BASE_URL}/users`, {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(user),
@@ -38,7 +57,7 @@ export const createUser = async (user) => {
 };
 
 export const deleteUser = async (id) => {
-  const res = await fetch(`${BASE_URL}/users/${id}`, {
+  const res = await safeFetch(`${BASE_URL}/users/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
@@ -46,7 +65,7 @@ export const deleteUser = async (id) => {
 };
 
 export const updateUser = async (id, user) => {
-  const res = await fetch(`${BASE_URL}/users/${id}`, {
+  const res = await safeFetch(`${BASE_URL}/users/${id}`, {
     method: "PATCH",
     headers: getAuthHeaders(),
     body: JSON.stringify(user),
@@ -56,7 +75,7 @@ export const updateUser = async (id, user) => {
 };
 
 export const loginUser = async (data) => {
-  const res = await fetch(`${BASE_URL}/users/login`, {
+  const res = await safeFetch(`${BASE_URL}/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +87,7 @@ export const loginUser = async (data) => {
 };
 
 export const signupAdmin = async (data) => {
-  const res = await fetch(`${BASE_URL}/users/signup`, {
+  const res = await safeFetch(`${BASE_URL}/users/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -80,7 +99,7 @@ export const signupAdmin = async (data) => {
 };
 
 export const getUsers = async () => {
-  const res = await fetch(`${BASE_URL}/users`, {
+  const res = await safeFetch(`${BASE_URL}/users`, {
     headers: getAuthHeaders(),
   });
 
