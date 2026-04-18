@@ -92,29 +92,29 @@
   margin: 0 auto;    /* Pushes it to the center horizontally */
   padding: 11px 20px;
   border-radius: 12px;
-  border: 1px solid rgba(167, 139, 250, 0.55);
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.92), rgba(168, 85, 247, 0.9));
-  color: #f5f3ff;
+  border: 1px solid rgba(251, 191, 36, 0.58);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.94), rgba(234, 88, 12, 0.92));
+  color: #fff7ed;
   font-weight: 800;
   letter-spacing: 0.2px;
-  box-shadow: 0 12px 26px rgba(109, 40, 217, 0.34);
+  box-shadow: 0 12px 26px rgba(194, 65, 12, 0.34);
   transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
 }
 
 .existing_users:hover{
   transform: translateY(-1px);
   filter: brightness(1.06);
-  box-shadow: 0 16px 30px rgba(109, 40, 217, 0.42);
+  box-shadow: 0 16px 30px rgba(194, 65, 12, 0.42);
 }
 
 .existing_users:active{
   transform: translateY(0) scale(0.98);
   filter: brightness(1);
-  box-shadow: 0 9px 18px rgba(109, 40, 217, 0.3);
+  box-shadow: 0 9px 18px rgba(194, 65, 12, 0.3);
 }
 
 .existing_users:focus-visible{
-  outline: 2px solid rgba(196, 181, 253, 0.95);
+  outline: 2px solid rgba(253, 230, 138, 0.95);
   outline-offset: 2px;
 }
 
