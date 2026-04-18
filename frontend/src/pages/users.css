@@ -84,6 +84,16 @@
     box-shadow: 0 12px 24px rgba(220, 38, 38, 0.36);
 }
 
+.delete_btn:active{
+    transform: scale(0.97);
+    box-shadow: 0 6px 14px rgba(220, 38, 38, 0.28);
+}
+
+.delete_btn:focus-visible{
+    outline: 2px solid rgba(248, 113, 113, 0.8);
+    outline-offset: 2px;
+}
+
 .edit_btn{
     background: linear-gradient(135deg, #0ea5e9, #2563eb);
     color: #eff6ff;
@@ -98,6 +108,16 @@
     transform: translateY(-1px);
     filter: brightness(1.05);
     box-shadow: 0 12px 24px rgba(14, 116, 144, 0.36);
+}
+
+.edit_btn:active{
+    transform: scale(0.97);
+    box-shadow: 0 6px 14px rgba(14, 116, 144, 0.28);
+}
+
+.edit_btn:focus-visible{
+    outline: 2px solid rgba(125, 211, 252, 0.85);
+    outline-offset: 2px;
 }
 
 /* Users page: rotating arc (different from Home loaders) */
